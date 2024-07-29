@@ -1,0 +1,44 @@
+{
+  "name": "schoolmanage-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "prisma": {
+    "seed": "babel-node prisma/seeders/seed.js"
+  },
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon --exec babel-node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "prisma migrate dev",
+    "postmigrate": "npx @snaplet/seed sync"
+  },
+  "keywords": [],
+  "author": "",
+  "nodemonConfig": {
+    "ext": "js,gql"
+  },
+  "license": "ISC",
+  "type": "module",
+  "description": "",
+  "dependencies": {
+    "@apollo/server": "^4.10.5",
+    "@graphql-tools/graphql-file-loader": "^8.0.1",
+    "@graphql-tools/load": "^8.0.2",
+    "@graphql-tools/schema": "^10.0.4",
+    "@graphql-tools/utils": "^10.3.2",
+    "@prisma/client": "^5.17.0",
+    "apollo-server-express": "^3.13.0",
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "graphql-tools": "^9.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^5.17.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.9",
+    "@babel/node": "^7.25.0",
+    "@babel/preset-env": "^7.25.0",
+    "nodemon": "^3.1.4"
+  }
+}
