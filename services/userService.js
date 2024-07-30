@@ -9,7 +9,18 @@ const getUsers = async () => {
 };
 
 const registerUser = async ({ email, password, firstName, lastName, role }) => {
+    const existingUser = await prisma.user.findUnique({
+        where: {
+            email,
+        },
+    });
+
+    if (existingUser) {
+        throw new Error('This email already exists');
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
+
     return prisma.user.create({
         data: {
             email,
@@ -20,6 +31,24 @@ const registerUser = async ({ email, password, firstName, lastName, role }) => {
         },
     });
 };
+
+const updateUser = async ({ id, firstName, lastName, email }) => {
+    const existingUser = await prisma.user.findUnique({
+        where: {
+            email,
+        },
+    });
+
+    if (existingUser) {
+        throw new Error('This email already exists');
+    }
+
+    return await prisma.user.update({
+        where: { id },
+        data: { firstName, lastName, email },
+    });
+}
+
 const getUserByToken = async (context) => {
     try {
         return await prisma.user.findUnique({
@@ -48,4 +77,4 @@ const loginUser = async ({email , password}) => {
     return jwt.sign({userId: user.id}, process.env.JWT_SECRET);
 }
 
-export { getUsers, getUserByToken, loginUser, registerUser };
+export { getUsers, getUserByToken, loginUser, registerUser, updateUser };

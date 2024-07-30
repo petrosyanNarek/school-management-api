@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { registerUser } from './userService.js';
+import {registerUser, updateUser} from './userService.js';
 
 const prisma = new PrismaClient();
 
@@ -18,10 +18,7 @@ const addTeacher = async ({ firstName, lastName, email, password }) => {
 const updateTeacher = async ({ id, firstName, lastName, email }) => {
     const teacher = await prisma.teacher.findUnique({ where: { id } });
     if (!teacher) throw new Error('Teacher not found');
-    const updatedUser = await prisma.user.update({
-        where: { id: teacher.userId },
-        data: { firstName, lastName, email },
-    });
+    const updatedUser = await updateUser({ id: teacher.userId, firstName, lastName, email })
     return prisma.teacher.update({
         where: { id },
         data: {
